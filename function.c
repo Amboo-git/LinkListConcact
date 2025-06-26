@@ -63,3 +63,104 @@ void addContact(ContactList *list) {
     p->next = newContact;
     list->size++;
 }
+void clearPhones(Phone *head) {
+    Phone *p = head;
+    while (p) {
+        Phone *next = p->next;
+        free(p);
+        p = next;
+    }
+}//清空要删除的人的手机号链表
+void clearEmails(Email *head) {
+    Email *e = head;
+    while (e) {
+        Email *next = e->next;
+        free(e);
+        e = next;
+    }
+}//清空要删除的人的邮箱链表
+void deleteContactByName(ContactList *list, const char *name) {
+    if (!list || !list->head || !name) return;
+
+    Contact *prev = list->head;
+    Contact *curr = list->head->next;
+
+    while (curr != NULL) {
+        if (strcmp(curr->displayName, name) == 0) {
+            // 断链
+            prev->next = curr->next;
+
+            // 清空手机号和邮箱链表
+            clearPhones(curr->phones);
+            clearEmails(curr->emails);
+
+            // 释放联系人节点
+            free(curr);
+            list->size--;
+
+            printf("联系人 \"%s\" 已成功删除。\n", name);
+            return;
+        }
+
+        prev = curr;
+        curr = curr->next;
+    }
+
+    printf("未找到名为 \"%s\" 的联系人。\n", name);
+}//删除一个联系人
+void searchContact(ContactList *list, const char *keyword) {
+    if (!list || !list->head || !keyword) return;
+
+    int found = 0;
+    Contact *curr = list->head->next;
+
+    while (curr != NULL) {
+        int match = 0;
+
+        // 1. 匹配姓名
+        if (strstr(curr->displayName, keyword) != NULL) {
+            match = 1;
+        }
+
+        // 2. 匹配手机号
+        Phone *p = curr->phones;
+        while (!match && p != NULL) {
+            if (strstr(p->number, keyword) != NULL) {
+                match = 1;
+                break;
+            }
+            p = p->next;
+        }
+
+        // 如果匹配，打印联系人信息
+        if (match) {
+            found++;
+            printf("\n🔍 匹配到联系人 #%d\n", found);
+            printf("姓名: %s\n", curr->displayName);
+            printf("备注: %s\n", curr->note);
+
+            // 打印所有电话
+            printf("电话号码:\n");
+            Phone *pp = curr->phones;
+            while (pp) {
+                printf("  - %s\n", pp->number);
+                pp = pp->next;
+            }
+
+            // 打印所有邮箱
+            printf("邮箱地址:\n");
+            Email *ee = curr->emails;
+            while (ee) {
+                printf("  - %s\n", ee->address);
+                ee = ee->next;
+            }
+        }
+
+        curr = curr->next;
+    }
+
+    if (found == 0) {
+        printf("未找到包含 \"%s\" 的联系人。\n", keyword);
+    }
+}//根据姓名和手机号关键词查找人
+
