@@ -35,6 +35,6 @@ Phone *createPhone() {
 }
 
 void initContactList(ContactList *contact){
-    contact->head = NULL;  // 通讯录初始化为空
+    contact->head = createContact(); // 哨兵节点，空数据
     contact->size = 0;
 }
