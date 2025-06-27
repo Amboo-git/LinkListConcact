@@ -2,13 +2,11 @@
 #include "stdio.h"
 #include <stdlib.h>   // malloc, free, exit
 #include <string.h>   // memset
+#include <assert.h>   // assert
 
 Contact *createContact() {
     Contact *p = (Contact *)malloc(sizeof(Contact));
-    if (p == NULL) {
-        perror("Contact节点内存分配失败");
-        exit(1);
-    }
+    assert(p != NULL);
     memset(p, 0, sizeof(Contact));
     p->next = NULL;
     return p;
@@ -16,10 +14,7 @@ Contact *createContact() {
 
 Email *createEmail() {
     Email *p = (Email *)malloc(sizeof(Email));
-    if (p == NULL) {
-        perror("Email节点内存分配失败");
-        exit(1);
-    }
+    assert(p != NULL);
     memset(p, 0, sizeof(Email));
     p->next = NULL;
     return p;
@@ -27,10 +22,7 @@ Email *createEmail() {
 
 Phone *createPhone() {
     Phone *p = (Phone *)malloc(sizeof(Phone));
-    if (p == NULL) {
-        perror("Phone节点内存分配失败");
-        exit(1);
-    }
+    assert(p != NULL);
     memset(p, 0, sizeof(Phone));
     p->next = NULL;
     return p;

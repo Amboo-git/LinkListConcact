@@ -8,7 +8,7 @@ int exportContactsToCsv(const ContactList *list, const char *filename)
     if (!list || !filename) return -1;
 
     FILE *fp = fopen(filename, "w");
-    if (!fp) { perror("无法写文件"); return -2; }
+    assert(fp != NULL);
     
     fputs("\xEF\xBB\xBF", fp);          // 写入 UTF-8 BOM
     fprintf(fp, "姓名,手机号码,email,备注\n");
@@ -57,14 +57,10 @@ int importContactsFromCsv(ContactList *list)
     scanf("%d",&filename);
 
     /* ----------- 参数检查 ----------- */
-    if (!list || !filename || *filename == '\0')     /* 空指针 / 空串 */
-        return -1;
+    assert(list != NULL || filename != NULL || *filename != '\0');
 
     FILE *fp = fopen(filename, "r");
-    if (!fp) {                                       /* 文件打开失败 */
-        perror("无法打开 CSV");
-        return -2;
-    }
+    assert(fp != NULL);
 
     char line[512];
 
@@ -77,25 +73,28 @@ int importContactsFromCsv(ContactList *list)
     int imported = 0;
 
     /* ----------- 读取数据行 ----------- */
-    while (fgets(line, sizeof(line), fp)) {
+    /*从 fp 读取一行数据到字符数组 line；成功时返回 line（非 NULL），失败或到达 EOF 返回 NULL*/
+    /*当 fget 返回 NULL 时，while循环结束*/
+    while (fgets(line, sizeof(line), fp)) { 
 
-        /* 去掉行尾 \r 或 \n */
+        /* 由于CSV当前操作的整行数据被存储进字符串数组，因此需要去掉行尾 \r 或 \n */
         line[strcspn(line, "\r\n")] = '\0';
         
         /* 解析四个字段 */
-        char *name  = strtok(line, ",");
-        char *phone = strtok(NULL, ",");
+        char *name  = strtok(line, ","); //strtok: 从 line 指针首个地址开始向右移动，将第一个存储","的位置替换为"\0"，并提取出“\0”前的所有字符，将其整体的值赋给contact->name;
+        char *phone = strtok(NULL, ","); //当第二次调用 起点为 NULL 时，strtok 会从上次结束位置的下一位开始寻找分隔符","
         char *email = strtok(NULL, ",");
         char *note  = strtok(NULL, ",");
 
-        if (!name || *name == '\0') continue;        /* 空姓名直接跳过 */
+        if (!name || *name == '\0') continue;        /* 下一行数据姓名为空时直接跳过 */
 
         /* 创建联系人节点 */
         Contact *c = createContact();
         strncpy(c->displayName, name, sizeof(c->displayName) - 1);
 
-        if (note && *note)
-            strncpy(c->note, note, sizeof(c->note) - 1);
+        if ((note != NULL) && (note[0] != '\0'))
+            strncpy(c->note, note, sizeof(c->note) - 1); /*将 note[n] 的前 n-1 位复制进 c->note，n-1 是为了
+            防止 note 过长占用了 strncpy 为新生成字符尾端添加"\0"的位置*/
 
         /* 单一电话 */
         if (phone && *phone) {
