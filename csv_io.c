@@ -45,11 +45,15 @@ int exportContactsToCsv(const ContactList *list, const char *filename)
     }
 
     fclose(fp);
+    printf("通讯录已导出至%s\n",filename);
     return 0;
 }
 
-int importContactsFromCsv(ContactList *list, const char *filename)
+int importContactsFromCsv(ContactList *list)
 {
+    char filename[100];
+    printf("请输入要导入的通讯录名称（仅支持CSV文件，且需要输入.csv扩展名）\n");
+    scanf("%d",&filename);
     if (!list || !filename) return -1;
 
     FILE *fp = fopen(filename, "r");
