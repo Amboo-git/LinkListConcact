@@ -1,5 +1,8 @@
 #include "contact.h"
 #include "stdio.h"
+#include <string.h>   // strcmp, strstr
+#include <stdlib.h>   // free
+#include <assert.h>   // assert
 
 void addPhone(Contact *contact) {
     assert(contact);

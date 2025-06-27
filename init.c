@@ -1,5 +1,7 @@
 #include "contact.h"
 #include "stdio.h"
+#include <stdlib.h>   // malloc, free, exit
+#include <string.h>   // memset
 
 Contact *createContact() {
     Contact *p = (Contact *)malloc(sizeof(Contact));
