@@ -1,6 +1,7 @@
 #include "csv_io.h"
 #include <stdio.h>
 #include <string.h>
+#include <assert.h>   // assert
 
 /* -------- 导出电话 / 邮箱 -------- */
 int exportContactsToCsv(const ContactList *list, const char *filename)
@@ -54,10 +55,10 @@ int importContactsFromCsv(ContactList *list)
 {
     char filename[100];
     printf("请输入要导入的通讯录名称（仅支持CSV文件，且需要输入.csv扩展名）\n");
-    scanf("%d",&filename);
+    scanf("%99s",&filename);
 
     /* ----------- 参数检查 ----------- */
-    assert(list != NULL || filename != NULL || *filename != '\0');
+    assert(list != NULL && filename[0] != '\0');
 
     FILE *fp = fopen(filename, "r");
     assert(fp != NULL);
@@ -99,7 +100,7 @@ int importContactsFromCsv(ContactList *list)
         /* 单一电话 */
         if (phone && *phone) {
             Phone *p = createPhone();
-            strncpy(p->number, phone, sizeof(p->number) - 1);
+            strncpy(p->number, phone, sizeof(p->number) - 1); //p 是 Phone 结构体的成员，c 是 Contact 的成员
             c->phones = p;                           /* 直接挂到联系人上 */
         }
 
