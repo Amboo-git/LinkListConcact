@@ -7,7 +7,7 @@
 void addPhone(Contact *contact) {
     assert(contact);
     Phone *newPhone = createPhone();
-    printf("请输入电话号码: ");
+    printf("请输入电话号码: \n");
     scanf("%29s", newPhone->number);
     newPhone->type = 1; // 默认类型 mobile，可拓展用户选择
 
@@ -25,7 +25,7 @@ void addPhone(Contact *contact) {
 void addEmail(Contact *contact) {
     assert(contact);
     Email *newEmail = createEmail();
-    printf("请输入邮箱: ");
+    printf("请输入邮箱: \n");
     scanf("%63s", newEmail->address);
     newEmail->type = 1; // 默认 personal
 
@@ -43,23 +43,23 @@ void addEmail(Contact *contact) {
 void addContact(ContactList *list) {
     assert(list);
     Contact *newContact = createContact();
-    printf("请输入联系人姓名: ");
+    printf("请输入联系人姓名: \n");
     scanf("%63s", newContact->displayName);
-    printf("请输入联系人备注: ");
+    printf("请输入联系人备注: \n");
     scanf("%127s", newContact->note);
 
     // 添加多个号码
     char choice;
     do {
         addPhone(newContact);
-        printf("继续添加号码？(y/n): ");
+        printf("继续添加号码？(y/n): \n");
         scanf(" %c", &choice);
     } while (choice == 'y');
 
     // 添加多个邮箱
     do {
         addEmail(newContact);
-        printf("继续添加邮箱？(y/n): ");
+        printf("继续添加邮箱？(y/n): \n");
         scanf(" %c", &choice);
     } while (choice == 'y');
 
