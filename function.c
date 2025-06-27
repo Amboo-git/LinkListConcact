@@ -66,6 +66,8 @@ void addContact(ContactList *list) {
     p->next = newContact;
     list->size++;
 }
+
+//清空删除对象的手机号链表
 void clearPhones(Phone *head) {
     Phone *p = head;
     while (p) {
@@ -73,7 +75,9 @@ void clearPhones(Phone *head) {
         free(p);
         p = next;
     }
-}//清空要删除的人的手机号链表
+}
+
+//清空删除对象的邮箱链表
 void clearEmails(Email *head) {
     Email *e = head;
     while (e) {
@@ -81,7 +85,9 @@ void clearEmails(Email *head) {
         free(e);
         e = next;
     }
-}//清空要删除的人的邮箱链表
+}
+
+//删除一个联系人
 void deleteContactByName(ContactList *list, const char *name) {
     if (!list || !list->head || !name) return;
 
@@ -110,7 +116,9 @@ void deleteContactByName(ContactList *list, const char *name) {
     }
 
     printf("未找到名为 \"%s\" 的联系人。\n", name);
-}//删除一个联系人
+}
+
+//根据姓名和手机号关键词查找联系人
 void searchContact(ContactList *list, const char *keyword) {
     assert(list);
     assert(keyword);
@@ -167,7 +175,19 @@ void searchContact(ContactList *list, const char *keyword) {
     if (found == 0) {
         printf("未找到包含 \"%s\" 的联系人。\n", keyword);
     }
-}//根据姓名和手机号关键词查找人
+}
+
+/*根据“姓名”查找联系人（精确匹配）；
+
+找到后提供一个简单菜单，让用户选择修改内容：
+
+修改姓名
+
+修改某个电话号码
+
+修改某个邮箱地址
+
+可多次修改，直到用户选择退出。*/
 void modifyContact(ContactList *list, const char *name) {
     assert(list);
     assert(name);
@@ -213,68 +233,43 @@ void modifyContact(ContactList *list, const char *name) {
                     scanf("%d", &target);
 
                     p = curr->phones;
-                    for (int i = 1; i < target && p != NULL; i++) {
-                        p = p->next;
-                    }
+                    for (int i = 1; i < target && p != NULL; i++) p = p->next;
 
                     if (p) {
                         printf("请输入新号码: ");
                         scanf("%29s", p->number);
-                        printf("号码已更新为: %s\n", p->number);
-                    } else {
-                        printf("无效编号。\n");
+                        printf("号码已更新为: %s\n", p->number);}
+                    else printf("无效编号。\n");
                     }
 
-                } else if (choice == 3) {
+                    else if (choice == 3) {
                     int index = 1;
                     Email *e = curr->emails;
                     while (e) {
                         printf("%d. %s\n", index++, e->address);
-                        e = e->next;
-                    }
+                        e = e->next;}
 
                     if (index == 1) {
                         printf("该联系人没有邮箱地址。\n");
-                        continue;
-                    }
+                        continue;}
 
                     int target;
                     printf("请选择要修改的邮箱编号: ");
                     scanf("%d", &target);
 
                     e = curr->emails;
-                    for (int i = 1; i < target && e != NULL; i++) {
-                        e = e->next;
-                    }
+                    for (int i = 1; i < target && e != NULL; i++) e = e->next;
 
                     if (e) {
                         printf("请输入新邮箱: ");
                         scanf("%63s", e->address);
-                        printf("邮箱已更新为: %s\n", e->address);
-                    } else {
-                        printf("无效编号。\n");
-                    }
+                        printf("邮箱已更新为: %s\n", e->address);}
+                    else printf("无效编号。\n");
                 }
-
             } while (choice != 0);
-
             return;
         }
-
         curr = curr->next;
     }
-
     printf("未找到名为 \"%s\" 的联系人。\n", name);
 }
-
-/*根据“姓名”查找联系人（精确匹配）；
-
-找到后提供一个简单菜单，让用户选择修改内容：
-
-修改姓名
-
-修改某个电话号码
-
-修改某个邮箱地址
-
-可多次修改，直到用户选择退出。*/
