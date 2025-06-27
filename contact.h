@@ -41,4 +41,16 @@ Email *createEmail();
 Phone *createPhone();
 void initContactList(ContactList *contact);
 
+void addPhone(Contact *contact);
+void addEmail(Contact *contact);
+void addContact(ContactList *list);
+
+void clearPhones(Phone *head);
+void clearEmails(Email *head);
+
+void deleteContactByName(ContactList *list, const char *name);
+void searchContact(ContactList *list, const char *keyword);
+void modifyContact(ContactList *list, const char *name);
+int countContacts(ContactList *list);
+void printAllContacts(ContactList *list);
 #endif
