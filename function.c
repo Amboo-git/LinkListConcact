@@ -2,6 +2,7 @@
 #include "stdio.h"
 
 void addPhone(Contact *contact) {
+    assert(contact);
     Phone *newPhone = createPhone();
     printf("请输入电话号码: ");
     scanf("%29s", newPhone->number);
@@ -19,6 +20,7 @@ void addPhone(Contact *contact) {
 }
 
 void addEmail(Contact *contact) {
+    assert(contact);
     Email *newEmail = createEmail();
     printf("请输入邮箱: ");
     scanf("%63s", newEmail->address);
@@ -36,6 +38,7 @@ void addEmail(Contact *contact) {
 }
 
 void addContact(ContactList *list) {
+    assert(list);
     Contact *newContact = createContact();
     printf("请输入联系人姓名: ");
     scanf("%63s", newContact->displayName);
@@ -109,6 +112,8 @@ void deleteContactByName(ContactList *list, const char *name) {
     printf("未找到名为 \"%s\" 的联系人。\n", name);
 }//删除一个联系人
 void searchContact(ContactList *list, const char *keyword) {
+    assert(list);
+    assert(keyword);
     if (!list || !list->head || !keyword) return;
 
     int found = 0;
@@ -164,6 +169,8 @@ void searchContact(ContactList *list, const char *keyword) {
     }
 }//根据姓名和手机号关键词查找人
 void modifyContact(ContactList *list, const char *name) {
+    assert(list);
+    assert(name);
     if (!list || !list->head || !name) return;
 
     Contact *curr = list->head->next;
