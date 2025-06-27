@@ -273,6 +273,7 @@ void modifyContact(ContactList *list, const char *name) {
     }
     printf("未找到名为 \"%s\" 的联系人。\n", name);
 }
+
 int countContacts(ContactList *list) {
     if (!list || !list->head) return 0;
 
@@ -286,6 +287,7 @@ int countContacts(ContactList *list) {
 
     return count;
 }
+
 void printAllContacts(ContactList *list) {
     if (!list || !list->head) {
         printf("联系人列表为空。\n");
@@ -301,19 +303,14 @@ void printAllContacts(ContactList *list) {
     printf("=== 联系人列表 ===\n");
 
     while (p != NULL) {
-        printf("\n联系人ID: %ld\n", p->contactId);
         printf("显示名: %s\n", p->displayName);
-        printf("姓: %s\n", p->familyName);
-        printf("名: %s\n", p->givenName);
-        printf("账户名: %s\n", p->accountName);
-        printf("账户类型: %s\n", p->accountType);
         printf("备注: %s\n", p->note);
 
         // 打印所有电话
         Phone *phone = p->phones;
         int phoneIndex = 1;
         while (phone != NULL) {
-            printf("电话%d: %s (类型: %d)\n", phoneIndex++, phone->number, phone->type);
+            printf("电话%d: %s \n", phoneIndex++, phone->number);
             phone = phone->next;
         }
 
@@ -321,7 +318,7 @@ void printAllContacts(ContactList *list) {
         Email *email = p->emails;
         int emailIndex = 1;
         while (email != NULL) {
-            printf("邮箱%d: %s (类型: %d)\n", emailIndex++, email->address, email->type);
+            printf("邮箱%d: %s \n", emailIndex++, email->address);
             email = email->next;
         }
 
