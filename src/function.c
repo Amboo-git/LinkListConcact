@@ -335,7 +335,7 @@ void printAllContacts(ContactList *list) {
             printf("邮箱%d: %s \n", emailIndex++, email->address);
             email = email->next;
         }
-
+        printf("=================\n");
         p = p->next;
     }
 

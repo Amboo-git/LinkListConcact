@@ -5,6 +5,7 @@
 
 
 void printTitle() {
+    printf("\n");
     printf("██╗     ██╗███╗   ██╗██╗  ██╗██╗     ██╗███████╗████████╗\n");
     printf("██║     ██║████╗  ██║██║ ██╔╝██║     ██║██╔════╝╚══██╔══╝\n");
     printf("██║     ██║██╔██╗ ██║█████╔╝ ██║     ██║███████╗   ██║   \n");
@@ -24,6 +25,7 @@ void runMenu(ContactList *plist){
 	assert(plist != NULL);
     int select = 0;
     printTitle();
+    printf("\n");
     printf("LinkList Contact %s\n", VERSION_STR);
     printf("\n");
     do{
@@ -47,25 +49,25 @@ void runMenu(ContactList *plist){
 		switch (select){
             case 0: break;
             case 1: 
-                addContact(plist);
+                addContact(plist); //增
                 break;
             case 2:
-                deleteContactByName(plist);
+                deleteContactByName(plist); //删
                 break;
             case 3:
-                modifyContact(plist);
+                modifyContact(plist); //改
                 break;
             case 4:
-                searchContact(plist);
+                searchContact(plist); //查
                 break;
             case 5:
-                printAllContacts(plist);
+                printAllContacts(plist); //列出所有联系人
                 break;
             case 6:
-                exportContactsToCsv(plist,"contacts.csv");
+                exportContactsToCsv(plist,"contacts.csv"); //导出 CSV
                 break;
             case 7:
-                importContactsFromCsv(plist);
+                importContactsFromCsv(plist); //导入 CSV
                 break;
     		default:
 			    printf("选择错误 ，请重新选择  .... \n");
