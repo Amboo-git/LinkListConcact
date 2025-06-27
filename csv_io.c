@@ -11,7 +11,7 @@ int exportContactsToCsv(const ContactList *list, const char *filename)
     if (!fp) { perror("无法写文件"); return -2; }
     
     fputs("\xEF\xBB\xBF", fp);          // 写入 UTF-8 BOM
-    fprintf(fp, "displayName,phone,email,note\n");
+    fprintf(fp, "姓名,手机号码,email,备注\n");
 
     /* 遍历联系人 */
     for (Contact *c = list->head ? list->head->next : NULL; c; c = c->next) {
