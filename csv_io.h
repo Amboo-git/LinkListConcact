@@ -4,6 +4,6 @@
 #include "contact.h"
 
 int exportContactsToCsv(const ContactList *list, const char *filename);
-int importContactsFromCsv(ContactList *list, const char *filename);
+int importContactsFromCsv(ContactList *list);
 
 #endif
