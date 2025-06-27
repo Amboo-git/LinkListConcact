@@ -342,3 +342,25 @@ void printAllContacts(ContactList *list) {
     printf("\n=== 全部联系人输出完毕 ===\n");
 }
 
+/* 清空整个联系人链表 —— 仅释放数据节点，不动哨兵节点 */
+void ClearList(ContactList *list)
+{
+    assert(list && list->head);        /* list / head 不应为空 */
+
+    Contact *curr = list->head->next;  /* 跳过哨兵节点 */
+    while (curr) {
+        Contact *next = curr->next;
+
+        /* 先把该联系人的电话号码链表全清掉 */
+        clearPhones(curr->phones);     /* 实现在 function.c 已有 */
+        /* 再清邮箱链表 */
+        clearEmails(curr->emails);
+
+        free(curr);                    /* 释放联系人节点本身 */
+        curr = next;
+    }
+
+    /* 复位哨兵 */
+    list->head->next = NULL;
+    list->size       = 0;
+}

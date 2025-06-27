@@ -53,4 +53,5 @@ void searchContact(ContactList *list);
 void modifyContact(ContactList *list);
 int countContacts(ContactList *list);
 void printAllContacts(ContactList *list);
+void ClearList(ContactList *list);
 #endif
