@@ -91,7 +91,11 @@ void clearEmails(Email *head) {
 }
 
 //删除一个联系人
-void deleteContactByName(ContactList *list, const char *name) {
+void deleteContactByName(ContactList *list) {
+    char name[64];
+    printf("请输入被删除联系人的姓名：\n");
+    scanf("%s",&name);
+
     if (!list || !list->head || !name) return;
 
     Contact *prev = list->head;
@@ -121,8 +125,11 @@ void deleteContactByName(ContactList *list, const char *name) {
     printf("未找到名为 \"%s\" 的联系人。\n", name);
 }
 
-//根据姓名和手机号关键词查找联系人
-void searchContact(ContactList *list, const char *keyword) {
+//根据姓名或手机号关键词打印联系人相关信息
+void searchContact(ContactList *list) {
+    printf("请输入搜索关键字（电话号码 或 姓名）\n");
+    char keyword[64];
+    scanf("%s",&keyword);
     assert(list);
     assert(keyword);
     if (!list || !list->head || !keyword) return;
@@ -191,7 +198,11 @@ void searchContact(ContactList *list, const char *keyword) {
 修改某个邮箱地址
 
 可多次修改，直到用户选择退出。*/
-void modifyContact(ContactList *list, const char *name) {
+void modifyContact(ContactList *list) {
+    printf("请输入被修改联系人的姓名");
+    char name[64];
+    scanf("%s",&name);
+
     assert(list);
     assert(name);
     if (!list || !list->head || !name) return;

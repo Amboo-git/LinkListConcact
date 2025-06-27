@@ -48,9 +48,9 @@ void addContact(ContactList *list);
 void clearPhones(Phone *head);
 void clearEmails(Email *head);
 
-void deleteContactByName(ContactList *list, const char *name);
-void searchContact(ContactList *list, const char *keyword);
-void modifyContact(ContactList *list, const char *name);
+void deleteContactByName(ContactList *list);
+void searchContact(ContactList *list);
+void modifyContact(ContactList *list);
 int countContacts(ContactList *list);
 void printAllContacts(ContactList *list);
 #endif
